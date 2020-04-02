@@ -35,7 +35,7 @@ Windows下配置Chrome WebDriver:
 具体操作这里既不介绍了。
 
 *****
-###### 3 注意
+##### 3 注意
 1）执行该脚本，可能需要ChromeDriver程序的支持；如果是其他浏览器，如IE浏览器，需要相应的IEDriver程序的支持。
 
 2）涉及库：`selenium`、`smtplib`、`pyinstaller`
