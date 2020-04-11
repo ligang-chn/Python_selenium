@@ -17,11 +17,11 @@ class Handle_Send_Email(object):
         # #开启SSL
         # self.client.starttls()
         #登录邮箱
-        self.myusername="1)发送邮箱"
-        self.mypassword="2)邮箱密码"
+        self.myusername="2532416629@qq.com"
+        self.mypassword="olsolhakmrweebfd"
         self.client.login(user=self.myusername,password=self.mypassword)
 
-    def send_email(self,contentStr,address="3)接收邮箱"):
+    def send_email(self,contentStr,address="2532416629@qq.com"):
         msg=MIMEMultipart()
         #邮件的主题
         msg['Subject']=Header("每日一报",'utf-8')
@@ -40,74 +40,94 @@ class Handle_webdriver(object):
         self.driver.maximize_window()
         self.myemail = Handle_Send_Email()
 
-
     def handle_login(self):
         # 登录网站
         self.driver.get("https://newsso.shu.edu.cn/login")
         if WebDriverWait(self.driver,5,0.5).until(EC.presence_of_element_located((By.ID,"username"))):
-            self.driver.find_element_by_id("username").send_keys("4)学号")#填充账号和密码，显示等待
+            self.driver.find_element_by_id("username").send_keys("18722049")#填充账号和密码，显示等待
             if WebDriverWait(self.driver,5,0.5).until(EC.presence_of_element_located((By.ID,"password"))):
-                self.driver.find_element_by_id("password").send_keys("5)密码")
+                self.driver.find_element_by_id("password").send_keys("H2oS190114")
                 self.driver.find_element_by_id("login-submit").click()
 
-                self.driver.get("http://selfreport.shu.edu.cn/Default.aspx")
-                if WebDriverWait(self.driver, 5, 0.5).until(EC.presence_of_element_located((By.LINK_TEXT, "报送历史"))):
-                    self.driver.get("http://selfreport.shu.edu.cn/ReportHistory.aspx")
-                    if WebDriverWait(self.driver, 5, 0.5).until(
-                            EC.presence_of_element_located((By.LINK_TEXT, "返回首页"))):
-                        result = self.driver.find_element_by_xpath(
-                            '/html/body/form/div[5]/div/div[2]/div[1]/div/ul/li[1]/a')
-                        if "已填报" in result.text:
-                            self.myemail.send_email("已填报")
-                            time.sleep(5)
-                            self.driver.quit()
-                        else:
-                            # print("未填报，即将执行填报...")
+                self.checkLogin()
+                # self.fillingForm()
+
+    def checkLogin(self):
+        self.driver.get("http://selfreport.shu.edu.cn/Default.aspx")
+        if WebDriverWait(self.driver, 5, 0.5).until(EC.presence_of_element_located((By.LINK_TEXT, "报送历史"))):
+            self.driver.get("http://selfreport.shu.edu.cn/ReportHistory.aspx")
+            if WebDriverWait(self.driver, 5, 0.5).until(
+                    EC.presence_of_element_located((By.LINK_TEXT, "返回首页"))):
+                result = self.driver.find_element_by_xpath(
+                    '/html/body/form/div[5]/div/div[2]/div[1]/div/ul/li[1]/a')
+                if "已填报" in result.text:
+                    self.myemail.send_email("已填报")
+                    time.sleep(5)
+                    self.driver.quit()
+                else:
+                    # print("未填报，即将执行填报...")
+                    time.sleep(2)
+                    # print("开始填报*****")
+                    self.driver.find_element_by_link_text("返回首页").click()
+                    self.fillingForm()#开始填报
+
+    def fillingForm(self):
+        # self.driver.get("http://selfreport.shu.edu.cn/Default.aspx")
+        if WebDriverWait(self.driver, 5, 0.5).until(
+                EC.presence_of_element_located((By.LINK_TEXT, "每日一报"))):
+            self.driver.get("http://selfreport.shu.edu.cn/DayReport.aspx")
+            if WebDriverWait(self.driver, 5, 0.5).until(
+                    EC.presence_of_element_located((By.ID, "p1_ChengNuo-inputEl-icon"))):
+                self.driver.find_element_by_id("p1_ChengNuo-inputEl-icon").click()#我承诺
+                time.sleep(1)
+                self.driver.find_element_by_id("p1_TiWen-inputEl").send_keys("36")#体温
+                time.sleep(1)
+                self.driver.find_element_by_id("p1_ddlSheng-inputEl").click() #省份
+                time.sleep(2)
+                self.driver.find_element_by_xpath("/html/body/ul[2]/li[11]").click()#江苏
+                time.sleep(2)
+                self.driver.find_element_by_id("p1_ddlShi-inputEl").click()  # 市
+                time.sleep(2)
+                self.driver.find_element_by_xpath("/html/body/ul[3]/li[8]").click()  #
+                time.sleep(2)
+                self.driver.find_element_by_id("p1_ddlXian-inputEl").click()  # 县
+                time.sleep(2)
+                self.driver.find_element_by_xpath("/html/body/ul[4]/li[5]").click()  #
+                time.sleep(2)
+                self.driver.find_element_by_id("p1_XiangXDZ-inputEl").send_keys("江苏省泰州市泰兴市黄桥镇路庄村路一七组53号")  # 地址
+                time.sleep(2)
+
+                self.driver.find_element_by_id("p1_ctl00_btnSubmit").click()
+                if WebDriverWait(self.driver, 5, 0.5).until(
+                        EC.presence_of_element_located((By.LINK_TEXT, "确定"))):
+                    time.sleep(2)
+                    self.driver.find_element_by_link_text("确定").click()
+                    if WebDriverWait(self.driver, 10, 0.5).until(
+                            EC.presence_of_element_located(
+                                (By.CLASS_NAME, "f-messagebox-message"))):
+                        if WebDriverWait(self.driver, 5, 0.5).until(
+                                EC.presence_of_element_located((By.LINK_TEXT, "确定"))):
                             time.sleep(2)
-                            # print("开始填报*****")
-                            self.driver.find_element_by_link_text("返回首页").click()
+                            self.driver.find_element_by_link_text("确定").click()
+                            time.sleep(2)
 
-                            # self.driver.get("http://selfreport.shu.edu.cn/Default.aspx")
-                            if WebDriverWait(self.driver, 5, 0.5).until(
-                                    EC.presence_of_element_located((By.LINK_TEXT, "每日一报"))):
-                                self.driver.get("http://selfreport.shu.edu.cn/DayReport.aspx")
-                                if WebDriverWait(self.driver, 5, 0.5).until(
-                                        EC.presence_of_element_located((By.ID, "p1_ChengNuo-inputEl-icon"))):
-                                    self.driver.find_element_by_id("p1_ChengNuo-inputEl-icon").click()
-                                    time.sleep(1)
-                                    self.driver.find_element_by_id("p1_TiWen-inputEl").send_keys("36")
-                                    time.sleep(1)
-                                    self.driver.find_element_by_id("p1_ctl00_btnSubmit").click()
-                                    if WebDriverWait(self.driver, 5, 0.5).until(
-                                            EC.presence_of_element_located((By.LINK_TEXT, "确定"))):
-                                        time.sleep(2)
-                                        self.driver.find_element_by_link_text("确定").click()
-                                        if WebDriverWait(self.driver, 10, 0.5).until(
-                                                EC.presence_of_element_located(
-                                                    (By.CLASS_NAME, "f-messagebox-message"))):
-                                            if WebDriverWait(self.driver, 5, 0.5).until(
-                                                    EC.presence_of_element_located((By.LINK_TEXT, "确定"))):
-                                                time.sleep(2)
-                                                self.driver.find_element_by_link_text("确定").click()
-                                                time.sleep(2)
-
-                            self.driver.get("http://selfreport.shu.edu.cn/Default.aspx")
-                            if WebDriverWait(self.driver, 5, 0.5).until(
-                                    EC.presence_of_element_located((By.LINK_TEXT, "报送历史"))):
-                                self.driver.get("http://selfreport.shu.edu.cn/ReportHistory.aspx")
-                                if WebDriverWait(self.driver, 5, 0.5).until(
-                                        EC.presence_of_element_located((By.LINK_TEXT, "返回首页"))):
-                                    result = self.driver.find_element_by_xpath(
-                                        '/html/body/form/div[5]/div/div[2]/div[1]/div/ul/li[1]/a')
-                                    if "已填报" in result.text:
-                                        self.myemail.send_email("填报成功")
-                                        # print("填报成功")
-                                        time.sleep(5)
-                                        self.driver.quit()
-                                    else:
-                                        self.myemail.send_email("填报失败...")
-                                        time.sleep(5)
-                                        self.driver.quit()
+        self.driver.get("http://selfreport.shu.edu.cn/Default.aspx")
+        if WebDriverWait(self.driver, 5, 0.5).until(
+                EC.presence_of_element_located((By.LINK_TEXT, "报送历史"))):
+            self.driver.get("http://selfreport.shu.edu.cn/ReportHistory.aspx")
+            if WebDriverWait(self.driver, 5, 0.5).until(
+                    EC.presence_of_element_located((By.LINK_TEXT, "返回首页"))):
+                result = self.driver.find_element_by_xpath(
+                    '/html/body/form/div[5]/div/div[2]/div[1]/div/ul/li[1]/a')
+                if "已填报" in result.text:
+                    self.myemail.send_email("填报成功")
+                    # print("填报成功")
+                    time.sleep(5)
+                    self.driver.quit()
+                else:
+                    self.myemail.send_email("填报失败...")
+                    time.sleep(5)
+                    self.driver.quit()
 
 
 if __name__=='__main__':
