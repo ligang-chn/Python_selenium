@@ -40,6 +40,7 @@ class Handle_webdriver(object):
         self.driver.maximize_window()
         self.myemail = Handle_Send_Email()
 
+
     def handle_login(self):
         # 登录网站
         self.driver.get("https://newsso.shu.edu.cn/login")
@@ -51,6 +52,7 @@ class Handle_webdriver(object):
 
                 self.checkLogin()
                 # self.fillingForm()
+
 
     def checkLogin(self):
         self.driver.get("http://selfreport.shu.edu.cn/Default.aspx")
@@ -70,6 +72,7 @@ class Handle_webdriver(object):
                     # print("开始填报*****")
                     self.driver.find_element_by_link_text("返回首页").click()
                     self.fillingForm()#开始填报
+
 
     def fillingForm(self):
         # self.driver.get("http://selfreport.shu.edu.cn/Default.aspx")
@@ -110,6 +113,7 @@ class Handle_webdriver(object):
                             time.sleep(2)
                             self.driver.find_element_by_link_text("确定").click()
                             time.sleep(2)
+
 
         self.driver.get("http://selfreport.shu.edu.cn/Default.aspx")
         if WebDriverWait(self.driver, 5, 0.5).until(
