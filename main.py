@@ -76,6 +76,7 @@ class Handle_webdriver(object):
 
 
     def fillingForm(self):
+        """进行填报"""
         # self.driver.get("http://selfreport.shu.edu.cn/Default.aspx")
         if WebDriverWait(self.driver, 5, 0.5).until(
                 EC.presence_of_element_located((By.LINK_TEXT, "每日一报"))):
