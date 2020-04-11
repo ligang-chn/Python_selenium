@@ -55,6 +55,7 @@ class Handle_webdriver(object):
 
 
     def checkLogin(self):
+        """检查是否已经填报"""
         self.driver.get("http://selfreport.shu.edu.cn/Default.aspx")
         if WebDriverWait(self.driver, 5, 0.5).until(EC.presence_of_element_located((By.LINK_TEXT, "报送历史"))):
             self.driver.get("http://selfreport.shu.edu.cn/ReportHistory.aspx")
