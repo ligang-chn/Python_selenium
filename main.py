@@ -17,11 +17,11 @@ class Handle_Send_Email(object):
         # #开启SSL
         # self.client.starttls()
         #登录邮箱
-        self.myusername="2532416629@qq.com"
-        self.mypassword="olsolhakmrweebfd"
+        self.myusername="1）邮箱"
+        self.mypassword="2）密码（授权码）"##"olsolhakmrweebfd"
         self.client.login(user=self.myusername,password=self.mypassword)
 
-    def send_email(self,contentStr,address="2532416629@qq.com"):
+    def send_email(self,contentStr,address="3）邮箱"):
         msg=MIMEMultipart()
         #邮件的主题
         msg['Subject']=Header("每日一报",'utf-8')
@@ -45,9 +45,9 @@ class Handle_webdriver(object):
         # 登录网站
         self.driver.get("https://newsso.shu.edu.cn/login")
         if WebDriverWait(self.driver,5,0.5).until(EC.presence_of_element_located((By.ID,"username"))):
-            self.driver.find_element_by_id("username").send_keys("18722049")#填充账号和密码，显示等待
+            self.driver.find_element_by_id("username").send_keys("4）账号")#填充账号和密码，显示等待
             if WebDriverWait(self.driver,5,0.5).until(EC.presence_of_element_located((By.ID,"password"))):
-                self.driver.find_element_by_id("password").send_keys("H2oS190114")
+                self.driver.find_element_by_id("password").send_keys("5）密码")
                 self.driver.find_element_by_id("login-submit").click()
 
                 self.checkLogin()
@@ -99,7 +99,7 @@ class Handle_webdriver(object):
                 time.sleep(2)
                 self.driver.find_element_by_xpath("/html/body/ul[4]/li[5]").click()  #
                 time.sleep(2)
-                self.driver.find_element_by_id("p1_XiangXDZ-inputEl").send_keys("江苏省泰州市泰兴市黄桥镇路庄村路一七组53号")  # 地址
+                self.driver.find_element_by_id("p1_XiangXDZ-inputEl").send_keys("6）地址")  # 地址
                 time.sleep(2)
 
                 self.driver.find_element_by_id("p1_ctl00_btnSubmit").click()
