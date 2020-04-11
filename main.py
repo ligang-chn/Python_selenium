@@ -135,7 +135,6 @@ class Handle_webdriver(object):
                     time.sleep(5)
                     self.driver.quit()
 
-
 if __name__=='__main__':
     shu=Handle_webdriver()
     shu.handle_login()
